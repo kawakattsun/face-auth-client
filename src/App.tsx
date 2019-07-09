@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { loadExpressionModels } from './face-api-control'
 import Container from '@material-ui/core/Container'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Typography from '@material-ui/core/Typography'
@@ -7,6 +8,9 @@ import { WebcamCapture } from './components/webcam-capture-component'
 
 const App: React.FC = () => {
   const [isActiveWebcamCapture, SetIsActiveWebcamCapture] = useState(false)
+  useEffect(() => {
+    loadExpressionModels()
+  }, [])
   const toggleIsActiveWebcamCapture = () => {
     SetIsActiveWebcamCapture(!isActiveWebcamCapture)
   }

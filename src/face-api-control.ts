@@ -64,7 +64,6 @@ export const getWebcamFaceDescription = async (webcam: any, canvas: any) => {
   })
   const result = await faceapi.detectSingleFace(webcam, faceDetectionOptions)
 
-  console.log(result)
   if (!result) {
     return false
   }

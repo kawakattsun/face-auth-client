@@ -3,7 +3,8 @@ import Webcam from 'react-webcam'
 import { makeStyles } from '@material-ui/core/styles'
 import IconButton from '@material-ui/core/IconButton'
 import PhotoCamera from '@material-ui/icons/PhotoCamera'
-import * as faceApiControl from '../face-api-control'
+import { getWebcamFaceDescription } from '../face-api-control'
+import { postFaceAuth } from '../api/face-auth-api'
 
 interface OwnProps {
   isActive: boolean
@@ -35,7 +36,6 @@ export const WebcamCapture: React.FC<OwnProps> = (props: OwnProps) => {
   const [isFaceSearch, setIsFaceSearch] = useState(true)
   const overlay = useRef(null)
   useEffect(() => {
-    faceApiControl.loadExpressionModels()
     if (isActive) {
       setIsFaceSearch(true)
       setImageSrc('')
@@ -54,12 +54,14 @@ export const WebcamCapture: React.FC<OwnProps> = (props: OwnProps) => {
     if (webcam.video.ended || webcam.video.paused) {
       setTimeout(() => onPlay())
     }
-    const isFindFace = await faceApiControl.getWebcamFaceDescription(
+    const isFindFace = await getWebcamFaceDescription(
       webcam.video,
       overlay.current
     )
     if (isFindFace) {
-      setImageSrc(webcam.getScreenshot())
+      const face = webcam.getScreenshot()
+      setImageSrc(face)
+      postFaceAuth({ name: 'test.jpeg', body: face })
       setIsFaceSearch(false)
       return
     }
