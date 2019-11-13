@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { loadExpressionModels } from './lib/face-api-control'
+import { loadExpressionModels } from '../lib/face-api-control'
 import Container from '@material-ui/core/Container'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
-import { WebcamCapture } from './components/webcam-capture-component'
+import { WebcamCapture } from './webcam-capture-component'
 
 const App: React.FC = () => {
   const [isActiveWebcamCapture, SetIsActiveWebcamCapture] = useState(false)

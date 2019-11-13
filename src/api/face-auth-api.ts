@@ -1,15 +1,23 @@
-import api from '../api'
+import api from './api'
 
-interface FaceAuthParams {
-  name: string
-  body: string
+interface SerarchFaceParams {
+  image: string | ArrayBuffer
 }
 
-export const postFaceAuth = (params: FaceAuthParams) => {
+export const searchFaceAuth = (params: SerarchFaceParams) => {
+  return api.post('/searchface', params)
+}
+
+interface SaveFaceParams {
+  userID: string
+  image: string | ArrayBuffer
+}
+
+export const collectFaceAuth = (params: SaveFaceParams) => {
   return api
-    .post('/face', params)
+    .post('/saveface', params)
     .then(response => {
-      return response.data
+      console.log(response.data)
     })
     .catch(e => {
       console.error(e)

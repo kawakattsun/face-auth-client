@@ -65,10 +65,13 @@ export const getWebcamFaceDescription = async (webcam: any, canvas: any) => {
   const result = await faceapi.detectSingleFace(webcam, faceDetectionOptions)
 
   if (!result) {
-    return false
+    return ''
+  }
+  if (result.box.height < 400) {
+    return 'alert'
   }
   const dims = faceapi.matchDimensions(canvas, webcam, true)
   const resizedResult = faceapi.resizeResults(result, dims)
   faceapi.draw.drawDetections(canvas, resizedResult)
-  return true
+  return 'ok'
 }

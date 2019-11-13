@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react'
 import Webcam from 'react-webcam'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/styles'
 import IconButton from '@material-ui/core/IconButton'
 import PhotoCamera from '@material-ui/icons/PhotoCamera'
-import { getWebcamFaceDescription } from '../face-api-control'
-import { postFaceAuth } from '../api/face-auth-api'
+import { getWebcamFaceDescription } from '../lib/face-api-control'
+import { searchFaceAuth } from '../api/face-auth-api'
 
 interface OwnProps {
   isActive: boolean
@@ -34,6 +34,7 @@ export const WebcamCapture: React.FC<OwnProps> = (props: OwnProps) => {
   const [imageSrc, setImageSrc] = useState('')
   const [webcam, setWebcam] = useState()
   const [isFaceSearch, setIsFaceSearch] = useState(true)
+  const [alertMessage, setAlertMessage] = useState('')
   const overlay = useRef(null)
   useEffect(() => {
     if (isActive) {
@@ -54,16 +55,35 @@ export const WebcamCapture: React.FC<OwnProps> = (props: OwnProps) => {
     if (webcam.video.ended || webcam.video.paused) {
       setTimeout(() => onPlay())
     }
-    const isFindFace = await getWebcamFaceDescription(
+    const faceDetect = await getWebcamFaceDescription(
       webcam.video,
       overlay.current
     )
-    if (isFindFace) {
+    if (faceDetect === 'ok') {
       const face = webcam.getScreenshot()
+      const b64 = face.split(',')
+      searchFaceAuth({
+        image: b64[1]
+      })
+        .then(response => {
+          console.log(response.data)
+          if (response.data.rekognition.FaceMatches.length > 0) {
+            setAlertMessage('認証しました。')
+          } else {
+            setAlertMessage('登録されておりません。')
+          }
+        })
+        .catch(e => {
+          console.error(e)
+          return
+        })
       setImageSrc(face)
-      postFaceAuth({ name: 'test.jpeg', body: face })
       setIsFaceSearch(false)
+      setAlertMessage('')
       return
+    }
+    if (faceDetect === 'alert') {
+      setAlertMessage('カメラに近づいてください。')
     }
     setTimeout(() => onPlay())
   }
@@ -74,6 +94,7 @@ export const WebcamCapture: React.FC<OwnProps> = (props: OwnProps) => {
 
   return (
     <React.Fragment>
+      <div>{alertMessage}</div>
       <div className={classes.webcam}>
         <Webcam
           ref={setRefWebcam}

@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const ENDPOINT = '/'
+const ENDPOINT = process.env.REACT_APP_API_ENDPOINT
 
 export default axios.create({
   responseType: 'json',
