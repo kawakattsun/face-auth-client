@@ -148,15 +148,27 @@ const WebcamCaptureComponent: React.FC<OwnProps> = (props: OwnProps) => {
       <div>
         <img src={imageSrc} alt="" />
       </div>
-      <div>
-        UserID:{' '}
-        <Input value={userID} onChange={e => setUserID(e.target.value)} />
-      </div>
-      <div>
-        <IconButton color="primary" onClick={onUpload}>
-          登録
-        </IconButton>
-      </div>
+      {(() => {
+        if (type === 'upload') {
+          return (
+            <div>
+              <div>
+                UserID:{' '}
+                <Input
+                  value={userID}
+                  onChange={e => setUserID(e.target.value)}
+                />
+              </div>
+              <div>
+                <IconButton color="primary" onClick={onUpload}>
+                  登録
+                </IconButton>
+              </div>
+            </div>
+          )
+        }
+        return null
+      })()}
     </React.Fragment>
   )
 }
