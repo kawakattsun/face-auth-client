@@ -67,7 +67,7 @@ export const getWebcamFaceDescription = async (webcam: any, canvas: any) => {
   if (!result) {
     return ''
   }
-  if (result.box.height < 400) {
+  if (result.box.height < 320) {
     return 'alert'
   }
   const dims = faceapi.matchDimensions(canvas, webcam, true)
