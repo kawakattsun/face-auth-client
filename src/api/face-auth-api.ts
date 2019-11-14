@@ -9,7 +9,7 @@ export const searchFaceAuth = (params: SerarchFaceParams) => {
 }
 
 interface SaveFaceParams {
-  userID: string
+  user_id: string
   image: string | ArrayBuffer
 }
 

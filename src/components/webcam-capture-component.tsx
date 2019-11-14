@@ -48,13 +48,19 @@ const WebcamCaptureComponent: React.FC<OwnProps> = (props: OwnProps) => {
   const classes = useStyles()
 
   const setRefWebcam = (el: Webcam) => setWebcam(el)
+
   const capture = () => {
     setImageSrc(webcam.getScreenshot())
   }
+
+  const handleChageUserID = (event: any) => {
+    setUserID(event.target.value)
+  }
+
   const onUpload = () => {
     const b64 = imageSrc.split(',')
     collectFaceAuth({
-      userID: userID,
+      user_id: userID,
       image: b64[1]
     })
       .then(response => {
@@ -66,6 +72,7 @@ const WebcamCaptureComponent: React.FC<OwnProps> = (props: OwnProps) => {
         return
       })
   }
+
   const onPlay = async () => {
     if (!isActive || !isFaceSearch || webcam.video === null) {
       return
@@ -153,11 +160,7 @@ const WebcamCaptureComponent: React.FC<OwnProps> = (props: OwnProps) => {
           return (
             <div>
               <div>
-                UserID:{' '}
-                <Input
-                  value={userID}
-                  onChange={e => setUserID(e.target.value)}
-                />
+                UserID: <Input value={userID} onChange={handleChageUserID} />
               </div>
               <div>
                 <IconButton color="primary" onClick={onUpload}>
