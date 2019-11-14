@@ -72,6 +72,7 @@ export const getWebcamFaceDescription = async (webcam: any, canvas: any) => {
   }
   const dims = faceapi.matchDimensions(canvas, webcam, true)
   const resizedResult = faceapi.resizeResults(result, dims)
+  console.log(resizedResult)
   faceapi.draw.drawDetections(canvas, resizedResult)
-  return 'ok'
+  return resizedResult.box
 }

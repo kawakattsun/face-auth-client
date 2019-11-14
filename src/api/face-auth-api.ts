@@ -14,13 +14,5 @@ interface SaveFaceParams {
 }
 
 export const collectFaceAuth = (params: SaveFaceParams) => {
-  return api
-    .post('/saveface', params)
-    .then(response => {
-      console.log(response.data)
-    })
-    .catch(e => {
-      console.error(e)
-      return []
-    })
+  return api.post('/saveface', params)
 }

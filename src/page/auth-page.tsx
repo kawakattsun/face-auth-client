@@ -1,16 +1,12 @@
-import React, { useState, useEffect } from 'react'
-import { loadExpressionModels } from '../lib/face-api-control'
+import React, { useState } from 'react'
 import Container from '@material-ui/core/Container'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
-import { WebcamCapture } from './webcam-capture-component'
+import WebcamCaptureComponent from '../components/webcam-capture-component'
 
-const App: React.FC = () => {
+const AuthPage: React.FC = () => {
   const [isActiveWebcamCapture, SetIsActiveWebcamCapture] = useState(false)
-  useEffect(() => {
-    loadExpressionModels()
-  }, [])
   const toggleIsActiveWebcamCapture = () => {
     SetIsActiveWebcamCapture(!isActiveWebcamCapture)
   }
@@ -19,15 +15,15 @@ const App: React.FC = () => {
       <CssBaseline />
       <Container component="main" maxWidth="lg">
         <Typography component="h1" variant="h5">
-          ファイルアップロード
+          Face Auth
         </Typography>
         <Button onClick={toggleIsActiveWebcamCapture}>
           {isActiveWebcamCapture ? 'Stop web camera.' : 'Start web camera.'}
         </Button>
-        <WebcamCapture isActive={isActiveWebcamCapture} />
+        <WebcamCaptureComponent isActive={isActiveWebcamCapture} type="auth" />
       </Container>
     </React.Fragment>
   )
 }
 
-export default App
+export default AuthPage
