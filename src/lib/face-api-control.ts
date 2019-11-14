@@ -56,23 +56,22 @@ export const loadExpressionModels = async () => {
 }
 
 export const getWebcamFaceDescription = async (webcam: any, canvas: any) => {
-  const inputSize = 512
-  const scoreThreshold = 0.5
   const faceDetectionOptions = new faceapi.TinyFaceDetectorOptions({
-    inputSize,
-    scoreThreshold
+    inputSize: 128,
+    scoreThreshold: 0.5
   })
   const result = await faceapi.detectSingleFace(webcam, faceDetectionOptions)
 
   if (!result) {
     return ''
   }
-  if (result.box.height < 320) {
+  if (result.box.height < result.imageHeight * 0.6) {
     return 'alert'
   }
   const dims = faceapi.matchDimensions(canvas, webcam, true)
   const resizedResult = faceapi.resizeResults(result, dims)
-  console.log(resizedResult)
   faceapi.draw.drawDetections(canvas, resizedResult)
+  console.log(resizedResult)
+
   return resizedResult.box
 }
