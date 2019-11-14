@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Container from '@material-ui/core/Container'
-import Typography from '@material-ui/core/Typography'
-import Button from '@material-ui/core/Button'
+import CommonPageTitleComponent from '../components/common/page-title-component'
+import WebcamButtonComponent from '../components/webcam-button-component'
 import WebcamCaptureComponent from '../components/webcam-capture-component'
 
 const AuthPage: React.FC = () => {
@@ -11,13 +11,12 @@ const AuthPage: React.FC = () => {
   }
 
   return (
-    <Container component="main" maxWidth="lg">
-      <Typography component="h1" variant="h5">
-        Face Auth
-      </Typography>
-      <Button onClick={toggleIsActiveWebcamCapture}>
-        {isActiveWebcamCapture ? 'Stop web camera.' : 'Start web camera.'}
-      </Button>
+    <Container component="main" maxWidth={false}>
+      <CommonPageTitleComponent title="Face Auth" />
+      <WebcamButtonComponent
+        isActive={isActiveWebcamCapture}
+        toggleAction={toggleIsActiveWebcamCapture}
+      />
       <WebcamCaptureComponent isActive={isActiveWebcamCapture} type="auth" />
     </Container>
   )

@@ -1,6 +1,6 @@
 import * as faceapi from 'face-api.js'
 
-const MODEL_URL = process.env.PUBLIC_URL + '/models'
+const MODEL_URL = process.env.PUBLIC_URL + '/weights'
 
 // Load tiny models and weights
 export const loadTinyModels = async () => {

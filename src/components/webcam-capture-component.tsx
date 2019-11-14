@@ -36,7 +36,6 @@ const videoConstraints = {
 const WebcamCaptureComponent: React.FC<OwnProps> = (props: OwnProps) => {
   let detectedImageSRC: string
   const { isActive, type } = props
-  // const [imageSrc, setImageSrc] = useState('')
   const [webcam, setWebcam] = useState()
   const [isFaceSearch, setIsFaceSearch] = useState(true)
   const [alertMessage, setAlertMessage] = useState('')
