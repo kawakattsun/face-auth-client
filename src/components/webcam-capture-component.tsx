@@ -34,7 +34,6 @@ const videoConstraints = {
 }
 
 const WebcamCaptureComponent: React.FC<OwnProps> = (props: OwnProps) => {
-  let detectedImageSRC: string
   const { isActive, type } = props
   const [webcam, setWebcam] = useState()
   const [isFaceSearch, setIsFaceSearch] = useState(true)
@@ -90,10 +89,9 @@ const WebcamCaptureComponent: React.FC<OwnProps> = (props: OwnProps) => {
         faceDetect.width,
         faceDetect.height
       )
-      detectedImageSRC = canvas.toDataURL('image/jpeg')
       switch (type) {
         case 'auth':
-          const b64 = detectedImageSRC.split(',')
+          const b64 = canvas.toDataURL('image/jpeg')
           searchFaceAuth({
             image: b64[1]
           })
@@ -130,7 +128,15 @@ const WebcamCaptureComponent: React.FC<OwnProps> = (props: OwnProps) => {
   }
 
   const onUpload = () => {
+    if (!detectFaceCanvas.current) {
+      setAlertMessage('顔認識されていません。')
+      return
+    }
+    const canvas = detectFaceCanvas.current
+    const detectedImageSRC = canvas.toDataURL('image/jpeg')
+
     if (detectedImageSRC.length <= 0) {
+      setAlertMessage('顔認識されていません。')
       return
     }
     const b64 = detectedImageSRC.split(',')

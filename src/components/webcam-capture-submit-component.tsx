@@ -1,5 +1,6 @@
 import React from 'react'
-import IconButton from '@material-ui/core/IconButton'
+import { makeStyles } from '@material-ui/core/styles'
+import Button from '@material-ui/core/Button'
 import Input from '@material-ui/core/Input'
 
 interface OwnProps {
@@ -8,11 +9,19 @@ interface OwnProps {
   onUpload: Function
 }
 
+const useStyles = makeStyles(theme => ({
+  button: {
+    margin: theme.spacing(1)
+  }
+}))
+
 const WebcamCaptureSubmitComponent: React.FC<OwnProps> = ({
   userID,
   handleChageUserID,
   onUpload
 }: OwnProps) => {
+  const classes = useStyles()
+
   return (
     <div>
       <div>
@@ -20,9 +29,14 @@ const WebcamCaptureSubmitComponent: React.FC<OwnProps> = ({
         <Input value={userID} onChange={event => handleChageUserID(event)} />
       </div>
       <div>
-        <IconButton color="primary" onClick={() => onUpload()}>
+        <Button
+          className={classes.button}
+          variant="outlined"
+          color="primary"
+          onClick={() => onUpload()}
+        >
           登録
-        </IconButton>
+        </Button>
       </div>
     </div>
   )
