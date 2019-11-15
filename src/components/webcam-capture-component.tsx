@@ -91,7 +91,8 @@ const WebcamCaptureComponent: React.FC<OwnProps> = (props: OwnProps) => {
       )
       switch (type) {
         case 'auth':
-          const b64 = canvas.toDataURL('image/jpeg')
+          const detectedImageSRC = canvas.toDataURL('image/jpeg')
+          const b64 = detectedImageSRC.split(',')
           searchFaceAuth({
             image: b64[1]
           })
